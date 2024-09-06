@@ -2,8 +2,8 @@ from peewee import AutoField, CharField, Model
 from config.database import database
 
 class TipoDispositivoDB(Model):
-    id = AutoField(column_name='tipo_dispositivo_id')
-    nome = CharField(column_name='tipo_dispositivo_nome')
+    id = AutoField()
+    nome = CharField()
 
     class Meta:
         database = database

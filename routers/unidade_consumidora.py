@@ -5,8 +5,12 @@ from schemas.unidade_consumidora import UnidadeConsumidoraCreate, UnidadeConsumi
 router = APIRouter(prefix='/unidades-consumidoras', tags=['UNIDADES CONSUMIDORAS'])
 
 @router.post(path='', response_model=UnidadeConsumidoraRead)
-def criar_unidade_consumidora(nova_unidade_consumidora: UnidadeConsumidoraCreate):
-    unidade_consumidora = UnidadeConsumidoraDB.create(**nova_unidade_consumidora.model_dump())
+def criar_unidade_consumidora(
+        nova_unidade_consumidora: UnidadeConsumidoraCreate,
+):
+    unidade_consumidora = UnidadeConsumidoraDB.create(
+        **nova_unidade_consumidora.model_dump()
+    )
     return unidade_consumidora
 
 @router.get(path='', response_model=UnidadeConsumidoraReadList)

@@ -11,5 +11,5 @@ class EnumGetComodos(Enum):
 
 class EnumOrigemDoConsumo(Enum):
     dispositivo_eletrico = 'dispositivo_eletrico'
-    comodo = 'comodo'
-    residencia = 'residencia'
+    comodo = 'comodo'  # Referente a dependencia
+    residencia = 'residencia'  # Referente a unidade_consumidora

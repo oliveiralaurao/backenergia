@@ -11,13 +11,13 @@ class UnidadeConsumidoraUpdate(BaseModel):
 class UnidadeConsumidoraRead(BaseModel):
     id: int
     nome: str
-    tipo_id: int
+    # tipo_id: int
     dependencias: list[DependenciaReadMany]
 
 class UnidadeConsumidoraReadForList(BaseModel):
     id: int
     nome: str
-    tipo_id: int
+    # tipo_id: int
 
 class UnidadeConsumidoraReadList(BaseModel):
     unidades_consumidoras: list[UnidadeConsumidoraReadForList]

@@ -1,19 +1,10 @@
-from fastapi import HTTPException, status
-
-def eletrodomestico_not_found_error():
-    raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND,
-        detail='Eletrodoméstico não encontrado',
-    )
+from fastapi import HTTPException
 
 def comodo_not_found_error():
-    raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND,
-        detail='Cômodo não encontrado',
-    )
+    return HTTPException(status_code=404, detail="Dependência não encontrada")
 
-def residencia_not_found_error():
-    raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND,
-        detail='Residência não encontrada',
-    )
+def eletrodomestico_not_found_error():
+    return HTTPException(status_code=404, detail="Dispositivo elétrico não encontrado")
+
+def unidade_consumidora_not_found_error():  # Novo erro
+    return HTTPException(status_code=404, detail="Unidade consumidora não encontrada")
