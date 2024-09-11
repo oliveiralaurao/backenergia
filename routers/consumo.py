@@ -1,9 +1,11 @@
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Query, HTTPException
 
 from models.dependencia import DependenciaDB
 from models.dispositivo import DispositivoDB
+from models.bandeira import BandeiraDB
 from models.unidade_consumidora import UnidadeConsumidoraDB
 from schemas.consumo import ConsumoRead
+from schemas.bandeira import BandeiraRead
 from services.consumo import calcular_consumo
 from utils.enuns import EnumOrigemDoConsumo
 from utils.erros import (
@@ -19,6 +21,7 @@ router = APIRouter(prefix='/consumos', tags=['Consumos'])
 def calcular_consumo_endpoint(
     origem_do_consumo: EnumOrigemDoConsumo = Query(...),
     item_id: int = Query(...),
+    bandeira_id: int = Query(...)  # Novo campo para receber a bandeira
 ):
     dispositivos_eletricos = []
 
@@ -54,12 +57,21 @@ def calcular_consumo_endpoint(
             )
         )
 
-    consumo_diario, consumo_mensal, consumo_anual = calcular_consumo(
-        dispositivos_eletricos
+    # Obtendo a bandeira tarifária
+    bandeira = BandeiraDB.get_or_none(BandeiraDB.id == bandeira_id)
+    if not bandeira:
+        raise HTTPException(status_code=404, detail="Bandeira não encontrada")
+
+    # Calculando o consumo com a bandeira
+    consumo_diario, consumo_mensal, consumo_anual, custo_diario, custo_mensal, custo_anual = calcular_consumo(
+        dispositivos_eletricos, bandeira
     )
 
     return ConsumoRead(
         consumo_diario=consumo_diario,
         consumo_mensal=consumo_mensal,
         consumo_anual=consumo_anual,
+        custo_diario=custo_diario,
+        custo_mensal=custo_mensal,
+        custo_anual=custo_anual
     )
