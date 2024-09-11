@@ -27,6 +27,8 @@ class DispositivoReadMany(BaseModel):
     id: int
     nome: str
     tipo_id: int
+    consumo: float
+    uso_diario: float
 
 class DispositivoReadList(BaseModel):
     dispositivos: list[DispositivoReadMany] = []
